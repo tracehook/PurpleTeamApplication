@@ -12,22 +12,20 @@ public class HomeFrame extends BaseFrame {
         homePanel.setLayout(new GridLayout(4, 1, 10, 10)); // Grid layout with 2 rows and 2 columns
 
         // Create buttons
-        JButton button1 = new JButton("New Employee");
-        JButton button2 = new JButton("View Employees");
-        JButton button3 = new JButton("New Evaluation");
-        JButton button4 = new JButton("View Evaluations");
+        JButton newEmployee = new JButton("New Employee");
+        JButton viewEmployee = new JButton("View Employees");
+        JButton newEval = new JButton("New Evaluation");
+        JButton viewEval = new JButton("View Evaluations");
 
         // Add action listeners to buttons
-        button1.addActionListener(new ActionListener() {
+        newEmployee.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // New Employee button
-                // Add code here
-                // Create new class that extends BaseFrame and add the specific stuff to it and then call it here
+                new NewEmployeeFrame();
             }
         });
 
-        button2.addActionListener(new ActionListener() {
+        viewEmployee.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // View Employees button
@@ -36,16 +34,14 @@ public class HomeFrame extends BaseFrame {
             }
         });
 
-        button3.addActionListener(new ActionListener() {
+        newEval.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // New Evaluation button
-                // Add code here
-                // Create new class that extends BaseFrame and add the specific stuff to it and then call it here
+                new NewEvaluationFrame();
             }
         });
 
-        button4.addActionListener(new ActionListener() {
+        viewEval.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // View Evaluations button
@@ -55,10 +51,10 @@ public class HomeFrame extends BaseFrame {
         });
 
         // Add buttons to the panel
-        homePanel.add(button1);
-        homePanel.add(button2);
-        homePanel.add(button3);
-        homePanel.add(button4);
+        homePanel.add(newEmployee);
+        homePanel.add(viewEmployee);
+        homePanel.add(newEval);
+        homePanel.add(viewEval);
 
         return homePanel;
     }
