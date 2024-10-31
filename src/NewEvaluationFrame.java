@@ -2,8 +2,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.regex.Pattern;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class NewEvaluationFrame extends BaseFrame {
+
+    // Declare JTextFields and JTextAreas as class members
+    private JTextField supervisorNameField;
+    private JTextField supervisorIDField;
+    private JTextField employeeNameField;
+    private JTextField employeeIDField;
+    private JTextField evaluationDateField;
+    private JTextArea question1Field;
+    private JTextArea question2Field;
+    private JTextArea question3Field;
+    private JTextArea question4Field;
+    private JTextArea question5Field;
+    private JTextArea recommendationsField;
 
     public NewEvaluationFrame() {
         super();
@@ -13,105 +29,67 @@ public class NewEvaluationFrame extends BaseFrame {
     @Override
     protected JPanel createMainPanel() {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridBagLayout());
+        panel.setLayout(new BorderLayout()); // Use BorderLayout for top, center, bottom arrangement
+
+        // Panel for all input fields
+        JPanel inputPanel = new JPanel();
+        inputPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(10, 10, 10, 10); // Add padding between components
 
-        // Set preferred size for the input fields
-        Dimension fieldSize = new Dimension(300, 25);
+        // Initialize JTextFields and JTextAreas
+        supervisorNameField = createTextField();
+        supervisorIDField = createTextField();
+        employeeNameField = createTextField();
+        employeeIDField = createTextField();
+        evaluationDateField = createTextField();
+        evaluationDateField.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))); // Format the date
+        evaluationDateField.setEditable(false); // Make the field non-editable
 
-        // Create labels and input fields
-        JTextField supervisorNameField = new JTextField();
-        supervisorNameField.setPreferredSize(fieldSize);
+        question1Field = createTextArea();
+        question2Field = createTextArea();
+        question3Field = createTextArea();
+        question4Field = createTextArea();
+        question5Field = createTextArea();
+        recommendationsField = createTextArea();
 
-        JTextField supervisorIDField = new JTextField();
-        supervisorIDField.setPreferredSize(fieldSize);
-
-        JTextField employeeNameField = new JTextField();
-        employeeNameField.setPreferredSize(fieldSize);
-
-        JTextField employeeIDField = new JTextField();
-        employeeIDField.setPreferredSize(fieldSize);
-
-        JTextField evaluationDateField = new JTextField();
-        evaluationDateField.setPreferredSize(fieldSize);
-
-        JTextArea question1Field = new JTextArea(3, 20);
-        JTextArea question2Field = new JTextArea(3, 20);
-        JTextArea question3Field = new JTextArea(3, 20);
-        JTextArea question4Field = new JTextArea(3, 20);
-        JTextArea question5Field = new JTextArea(3, 20);
-        JTextArea recommendationsField = new JTextArea(3, 20);
-
-        // Add components to panel with proper positioning
-        gbc.gridx = 0; gbc.gridy = 0; // First column
-        panel.add(new JLabel("Supervisor Name:"), gbc);
-        gbc.gridx = 1;
-        panel.add(supervisorNameField, gbc);
-
-        gbc.gridx = 0; gbc.gridy = 1;
-        panel.add(new JLabel("Supervisor ID:"), gbc);
-        gbc.gridx = 1;
-        panel.add(supervisorIDField, gbc);
-
-        gbc.gridx = 0; gbc.gridy = 2;
-        panel.add(new JLabel("Employee Name:"), gbc);
-        gbc.gridx = 1;
-        panel.add(employeeNameField, gbc);
-
-        gbc.gridx = 0; gbc.gridy = 3;
-        panel.add(new JLabel("Employee ID:"), gbc);
-        gbc.gridx = 1;
-        panel.add(employeeIDField, gbc);
-
-        gbc.gridx = 0; gbc.gridy = 4;
-        panel.add(new JLabel("Evaluation Date:"), gbc);
-        gbc.gridx = 1;
-        panel.add(evaluationDateField, gbc);
+        // Add components to input panel
+        addComponent(inputPanel, gbc, "Supervisor Name:", supervisorNameField, 0);
+        addComponent(inputPanel, gbc, "Supervisor ID:", supervisorIDField, 1);
+        addComponent(inputPanel, gbc, "Employee Name:", employeeNameField, 2);
+        addComponent(inputPanel, gbc, "Employee ID:", employeeIDField, 3);
+        addComponent(inputPanel, gbc, "Evaluation Date:", evaluationDateField, 4);
 
         // Add questions with text areas
-        gbc.gridx = 0; gbc.gridy = 5;
-        panel.add(new JLabel("Feelings while performing tasks:"), gbc);
-        gbc.gridx = 1;
-        panel.add(new JScrollPane(question1Field), gbc);
+        addComponent(inputPanel, gbc, "Feelings while performing tasks:", new JScrollPane(question1Field), 5);
+        addComponent(inputPanel, gbc, "If you could do one task all day:", new JScrollPane(question2Field), 6);
+        addComponent(inputPanel, gbc, "Tasks you're good at:", new JScrollPane(question3Field), 7);
+        addComponent(inputPanel, gbc, "Tasks you dread:", new JScrollPane(question4Field), 8);
+        addComponent(inputPanel, gbc, "Tasks you look forward to:", new JScrollPane(question5Field), 9);
+        addComponent(inputPanel, gbc, "Recommendations/Notes:", new JScrollPane(recommendationsField), 10);
 
-        gbc.gridx = 0; gbc.gridy = 6;
-        panel.add(new JLabel("If you could do one task all day:"), gbc);
-        gbc.gridx = 1;
-        panel.add(new JScrollPane(question2Field), gbc);
+        // Create a JScrollPane for the input panel
+        JScrollPane scrollPane = new JScrollPane(inputPanel);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        panel.add(scrollPane, BorderLayout.CENTER); // Add scrollable area in the center
 
-        gbc.gridx = 0; gbc.gridy = 7;
-        panel.add(new JLabel("Tasks you're good at:"), gbc);
-        gbc.gridx = 1;
-        panel.add(new JScrollPane(question3Field), gbc);
+        // Add Home button (not in the scrollable area)
+        JButton homeButton = new JButton("Home");
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // Close the current frame
+            }
+        });
+        panel.add(homeButton, BorderLayout.NORTH); // Add Home button at the top
 
-        gbc.gridx = 0; gbc.gridy = 8;
-        panel.add(new JLabel("Tasks you dread:"), gbc);
-        gbc.gridx = 1;
-        panel.add(new JScrollPane(question4Field), gbc);
-
-        gbc.gridx = 0; gbc.gridy = 9;
-        panel.add(new JLabel("Tasks you look forward to:"), gbc);
-        gbc.gridx = 1;
-        panel.add(new JScrollPane(question5Field), gbc);
-
-        gbc.gridx = 0; gbc.gridy = 10;
-        panel.add(new JLabel("Recommendations/Notes:"), gbc);
-        gbc.gridx = 1;
-        panel.add(new JScrollPane(recommendationsField), gbc);
-
-        // Create and add the Save button, align it across two columns
+        // Create and add the Save button at the bottom (not in the scrollable area)
         JButton saveButton = new JButton("Save");
-        gbc.gridx = 0; gbc.gridy = 11;
-        gbc.gridwidth = 2; // Make the button span across two columns
-        gbc.anchor = GridBagConstraints.CENTER; // Center the button
-        panel.add(saveButton, gbc);
-
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Action to happen on button click, gather all the input data
+                // Retrieve values from input fields
                 String supervisorName = supervisorNameField.getText();
                 String supervisorID = supervisorIDField.getText();
                 String employeeName = employeeNameField.getText();
@@ -124,15 +102,73 @@ public class NewEvaluationFrame extends BaseFrame {
                 String lookedForwardTasks = question5Field.getText();
                 String recommendations = recommendationsField.getText();
 
-                // Print out the evaluation for now
-                System.out.println("Evaluation Saved");
-                System.out.printf("Supervisor: %s (%s)\nEmployee: %s (%s)\nEvaluation Date: %s\n",
-                        supervisorName, supervisorID, employeeName, employeeID, evaluationDate);
-                System.out.printf("Feelings: %s\nFavorite Task: %s\nGood at: %s\nDreaded: %s\nLooked Forward: %s\nRecommendations: %s\n",
-                        feelings, favoriteTask, goodAtTasks, dreadedTasks, lookedForwardTasks, recommendations);
+                // Validate fields with regular expressions (placeholders)
+                if (!validateName(supervisorName) || !validateName(employeeName)) {
+                    JOptionPane.showMessageDialog(panel, "Invalid name. Please enter valid names.");
+                    return;
+                }
+
+                if (!validateID(supervisorID) || !validateID(employeeID)) {
+                    JOptionPane.showMessageDialog(panel, "Invalid ID. Please enter valid IDs.");
+                    return;
+                }
+
+                // Create a new Evaluation object and save it
+                Evaluation newEvaluation = new Evaluation(supervisorName, supervisorID, employeeName, employeeID, evaluationDate, feelings, favoriteTask, goodAtTasks, dreadedTasks, lookedForwardTasks, recommendations);
+                newEvaluation.saveToFile();
+                clearFields();
+                JOptionPane.showMessageDialog(panel, "Evaluation created and saved successfully.");
+                dispose();
             }
         });
+        panel.add(saveButton, BorderLayout.SOUTH); // Add Save button at the bottom
 
         return panel;
+    }
+
+    // Helper method to create JTextField with a minimum size
+    private JTextField createTextField() {
+        JTextField textField = new JTextField();
+        textField.setMinimumSize(new Dimension(300, 25));
+        return textField;
+    }
+
+    // Helper method to create JTextArea with a fixed size
+    private JTextArea createTextArea() {
+        return new JTextArea(3, 20);
+    }
+
+    // Helper method to add components to the panel
+    private void addComponent(JPanel panel, GridBagConstraints gbc, String label, Component component, int gridY) {
+        gbc.gridx = 0;
+        gbc.gridy = gridY; // First column
+        panel.add(new JLabel(label), gbc);
+        gbc.gridx = 1; // Second column
+        gbc.weightx = 1.0; // Allow the component to expand
+        panel.add(component, gbc);
+        gbc.weightx = 0; // Reset weight for the next components
+    }
+
+    // Placeholder for name validation
+    private boolean validateName(String name) {
+        return Pattern.matches("[A-Za-z ]+", name); // Name should contain only alphabets
+    }
+
+    private boolean validateID(String id) {
+        return Pattern.matches("[0-9]+", id); // ID should contain only numbers
+    }
+
+    private void clearFields() {
+        supervisorNameField.setText("");
+        supervisorIDField.setText("");
+        employeeNameField.setText("");
+        employeeIDField.setText("");
+        evaluationDateField.setText("");
+        question1Field.setText("");
+        question2Field.setText("");
+        question3Field.setText("");
+        question4Field.setText("");
+        question5Field.setText("");
+        recommendationsField.setText("");
     }
 }
