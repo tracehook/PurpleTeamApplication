@@ -19,8 +19,8 @@ public class ViewEmployeesFrame extends BaseFrame {
     @Override
     protected JPanel createMainPanel() {
         JPanel panel = new JPanel();
+        panel.setBackground(Color.decode("#424249")); // Setting the background color
         panel.setLayout(new BorderLayout()); // Use BorderLayout for better placement of components
-        panel.setBackground(Color.WHITE); // Set a light background for better readability
 
         // Create a panel for buttons to keep them together
         JPanel buttonPanel = new JPanel();
@@ -54,6 +54,7 @@ public class ViewEmployeesFrame extends BaseFrame {
                 JOptionPane.showMessageDialog(null, "You must be a manager to edit Employees.");
             }
         });
+        
         
 
         // Add action listener to the "Home" button

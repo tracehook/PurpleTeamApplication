@@ -18,7 +18,7 @@ public class ViewEvaluationFrame extends BaseFrame {
     protected JPanel createMainPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout()); // Use BorderLayout for better placement of components
-        panel.setBackground(Color.WHITE); // Set a light background for better readability
+        panel.setBackground(Color.decode("#424249")); // Setting the background color
 
         // Create a panel for buttons
         JPanel buttonPanel = new JPanel();
