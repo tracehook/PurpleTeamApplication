@@ -62,13 +62,17 @@ public class ViewEvaluationFrame extends BaseFrame {
         return panel;
     }
 
-    // will, display text from the file here, use textArea.append() to add text to the frame that i have set to hold the data
     public void displayData() {
         // Read evaluation data from the file and display it in the JTextArea
         try (BufferedReader reader = new BufferedReader(new FileReader("Evaluations.txt"))) {
             String line;
-            while ((line = reader.readLine()) != null) {
-                textArea.append(line + "\n"); // Append each line of the file to the JTextArea
+            while ((line = reader.readLine()) != null) {  //Will need to be fixed. evaluations.txt may have the correct data
+                String[] data = line.split(";");
+                textArea.append("Supervisor ID: " + data[0] + "    Supervisor Name: " + data[1] + "   Employee ID: " + data[2] + 
+                    "    Employee Name: " + data[3] + "   Evaluation Date: " + data[4]
+                    + " Feelings while performing tasks:: " + data[5] + "  If you could do one task all day: "  +data[6] + 
+                    "  Tasks you're good at:: " + data[7] + "  Tasks you dread:: " + data[8]  + " Tasks you look forward to: " +
+                    data[9] + " Recommendations/Notes: " + data[10] + "\n" + "\n"); // Append each line of the file to the JTextArea
             }
         } catch (IOException e) {
             textArea.setText("Error reading file: " + e.getMessage()); // Display error message if file reading fails
