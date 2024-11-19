@@ -29,6 +29,7 @@ public class NewEvaluationFrame extends BaseFrame {
     @Override
     protected JPanel createMainPanel() {
         JPanel panel = new JPanel();
+        panel.setBackground(Color.decode("#424249")); // Setting the background color
         panel.setLayout(new BorderLayout()); // Use BorderLayout for top, center, bottom arrangement
 
         // Panel for all input fields
@@ -62,11 +63,11 @@ public class NewEvaluationFrame extends BaseFrame {
         addComponent(inputPanel, gbc, "Evaluation Date:", evaluationDateField, 4);
 
         // Add questions with text areas
-        addComponent(inputPanel, gbc, "Feelings while performing tasks:", new JScrollPane(question1Field), 5);
-        addComponent(inputPanel, gbc, "If you could do one task all day:", new JScrollPane(question2Field), 6);
+        addComponent(inputPanel, gbc, "Feelings while performing specific tasks, explain why:", new JScrollPane(question1Field), 5);
+        addComponent(inputPanel, gbc, "If you could do one task all day, explain why:", new JScrollPane(question2Field), 6);
         addComponent(inputPanel, gbc, "Tasks you're good at:", new JScrollPane(question3Field), 7);
-        addComponent(inputPanel, gbc, "Tasks you dread:", new JScrollPane(question4Field), 8);
-        addComponent(inputPanel, gbc, "Tasks you look forward to:", new JScrollPane(question5Field), 9);
+        addComponent(inputPanel, gbc, "Tasks you dread, explain why:", new JScrollPane(question4Field), 8);
+        addComponent(inputPanel, gbc, "Tasks you look forward to, explain why:", new JScrollPane(question5Field), 9);
         addComponent(inputPanel, gbc, "Recommendations/Notes:", new JScrollPane(recommendationsField), 10);
 
         // Create a JScrollPane for the input panel

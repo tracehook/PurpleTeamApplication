@@ -15,6 +15,7 @@ public class HomeFrame extends BaseFrame {
     @Override
     protected JPanel createMainPanel() {
         JPanel homePanel = new JPanel(new GridBagLayout());
+        homePanel.setBackground(Color.decode("#424249")); // Setting the background color
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 0, 10, 0); // add spacing between buttons
 

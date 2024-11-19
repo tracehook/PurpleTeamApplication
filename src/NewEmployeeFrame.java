@@ -32,6 +32,7 @@ public class NewEmployeeFrame extends BaseFrame {
     @Override
     protected JPanel createMainPanel() {
         JPanel panel = new JPanel();
+        panel.setBackground(Color.decode("#424249")); // Setting the background color
         panel.setLayout(new BorderLayout());
 
         // Panel for all input fields
