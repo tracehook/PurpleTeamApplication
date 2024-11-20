@@ -9,15 +9,28 @@ public class LoginFrame extends BaseFrame {
     @Override
     protected JPanel createMainPanel() {
         JPanel panel = new JPanel();
+        panel.setBackground(Color.decode("#424249")); // Setting the background color
         panel.setLayout(new GridBagLayout()); // Use GridBagLayout for flexible component arrangement
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10); // Add padding between components
 
+        // Load the image
+        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/assets/purpleMonkey.png"));
+        JLabel imageLabel = new JLabel(imageIcon);
+        
+        // Position the image before the header label
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2; // Span across two columns
+        gbc.anchor = GridBagConstraints.NORTH; // Center the image
+        panel.add(imageLabel, gbc); // Add image before the header label
+
         // Header label
         JLabel headerLabel = new JLabel("Login");
+        headerLabel.setForeground(Color.WHITE); // Set font color to white
         headerLabel.setFont(new Font("Arial", Font.BOLD, 24)); // Set font style and size
         gbc.gridx = 0;
-        gbc.gridy = 0; // Set to a valid row (0 in this case)
+        gbc.gridy = 1; // Move the header to the next row (1 in this case)
         gbc.gridwidth = 2; // Span across two columns
         gbc.anchor = GridBagConstraints.CENTER; // Center the label
         gbc.weightx = 1.0; // Allow the label to expand
@@ -34,21 +47,21 @@ public class LoginFrame extends BaseFrame {
 
         // Add components to the panel with positioning
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         panel.add(usernameLabel, gbc);
 
         gbc.gridx = 1;
         panel.add(usernameField, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         panel.add(passwordLabel, gbc);
 
         gbc.gridx = 1;
         panel.add(passwordField, gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         panel.add(submitButton, gbc);
 
         // Add action listener to the submit button
@@ -97,6 +110,7 @@ public class LoginFrame extends BaseFrame {
 
         return panel;
     }
+
 
     // Method to validate username
     private boolean validateUsername(String username) {

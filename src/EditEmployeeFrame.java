@@ -35,6 +35,7 @@ public class EditEmployeeFrame extends BaseFrame {
     @Override
     protected JPanel createMainPanel() {
         JPanel panel = new JPanel(new BorderLayout());
+        panel.setBackground(Color.decode("#424249")); // Setting the background color
 
         // Panel for all input fields
         JPanel inputPanel = new JPanel(new GridBagLayout());
@@ -43,7 +44,7 @@ public class EditEmployeeFrame extends BaseFrame {
         gbc.insets = new Insets(10, 10, 10, 10); // Add padding between components
 
 
-        populateEmployeeData(employeeID);
+populateEmployeeData(employeeID);
 
         // Add Back button (not in the scrollable area)
         JButton backButton = new JButton("Back");
@@ -92,18 +93,23 @@ public class EditEmployeeFrame extends BaseFrame {
                 return;
             }
 
-            // Additional validation and save logic here
-            JOptionPane.showMessageDialog(panel, "Employee details saved successfully.");
-            dispose();
+                // rewrite the line that the data is taken in from in the file with the new data
+                
+
+
+
+
+                JOptionPane.showMessageDialog(panel, "Employee details saved successfully.");
+                dispose();
         });
         panel.add(saveButton, BorderLayout.SOUTH); // Add Save button at the bottom
 
         return panel;
-    }
+}
 
     // Helper method to create JTextField with minimum size
     private JTextField createTextField() {
-        JTextField textField = new JTextField("Initial text");
+        JTextField textField = new JTextField("Initial Text");
         textField.setMinimumSize(new Dimension(200, 30));
         return textField;
     }
@@ -145,6 +151,7 @@ public class EditEmployeeFrame extends BaseFrame {
                     for (int i = 0; i < data.length; i++) {
                         System.out.println(data[i]);
                     }
+                    // display the existing data in a seperate area.
                     firstNameField.setText(data[1]);
                     lastNameField.setText(data[2]);
                     emailField.setText(data[3]);
