@@ -1,1 +1,2 @@
 1; Trace Hook; 0; John Smith; 1; 10/22/2024; good; code; procrastinating; test; testing; null
+0; William Ashford; 2; John Doe; 5; 2024-11-20; Sad; Gaming; Drawing; Writing; Nothing; null
