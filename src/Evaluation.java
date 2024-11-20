@@ -39,18 +39,18 @@ public class Evaluation {                              // private variables used
     }
 
     public Evaluation(String supervisorName, String supervisorID, String employeeName,
-            String employeeID, String evalDate, String answer1, String answer2, String answer3, String answer4, String answer5, String reccomendations) {
-                this.supervisorName = supervisorName;
-                this.supervisorID = supervisorID;
-                this.employeeName = employeeName;
-                this.employeeID = employeeID;
-                this.evalDate = evalDate;
-                this.answer1 = answer1;
-                this.answer2 = answer2;
-                this.answer3 = answer3;
-                this.answer4 = answer4;
-                this.answer5 = answer5;
-                this.recommendations = recommendations;
+                      String employeeID, String evalDate, String answer1, String answer2, String answer3, String answer4, String answer5, String recommendations) {
+        this.supervisorName = supervisorName;
+        this.supervisorID = supervisorID;
+        this.employeeName = employeeName;
+        this.employeeID = employeeID;
+        this.evalDate = evalDate;
+        this.answer1 = answer1;
+        this.answer2 = answer2;
+        this.answer3 = answer3;
+        this.answer4 = answer4;
+        this.answer5 = answer5;
+        this.recommendations = recommendations;
     }
 
     // Method to get the next available employee ID
