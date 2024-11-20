@@ -109,7 +109,7 @@ populateEmployeeData(employeeID);
 
     // Helper method to create JTextField with minimum size
     private JTextField createTextField() {
-        JTextField textField = new JTextField();
+        JTextField textField = new JTextField("Initial Text");
         textField.setMinimumSize(new Dimension(200, 30));
         return textField;
     }
@@ -152,7 +152,18 @@ populateEmployeeData(employeeID);
                         System.out.println(data[i]);
                     }
                     // display the existing data in a seperate area.
-                    
+                    firstNameField.setText(data[1]);
+                    lastNameField.setText(data[2]);
+                    emailField.setText(data[3]);
+                    usernameField.setText(data[4]);
+                    accessLevelField.setText(data[6]);
+                    dateHiredField.setText(data[7]);
+                    currentJobField.setText(data[8]);
+                    softSkillsField.setText(data[9]);
+                    hardSkillsField.setText(data[10]);
+                    talentsField.setText(data[11]);
+                    virtuesField.setText(data[12]);
+                    pastJobsField.setText(data[13]);
                     break;
                 }
             }
