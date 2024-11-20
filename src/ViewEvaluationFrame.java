@@ -68,11 +68,11 @@ public class ViewEvaluationFrame extends BaseFrame {
             String line;
             while ((line = reader.readLine()) != null) {  //Will need to be fixed. evaluations.txt may have the correct data
                 String[] data = line.split(";");
-                textArea.append("Supervisor ID: " + data[0] + "    Supervisor Name: " + data[1] + "   Employee ID: " + data[2] + 
-                    "    Employee Name: " + data[3] + "   Evaluation Date: " + data[4]
-                    + " Feelings while performing tasks:: " + data[5] + "  If you could do one task all day: "  +data[6] + 
-                    "  Tasks you're good at:: " + data[7] + "  Tasks you dread:: " + data[8]  + " Tasks you look forward to: " +
-                    data[9] + " Recommendations/Notes: " + data[10] + "\n" + "\n"); // Append each line of the file to the JTextArea
+                textArea.append("Supervisor ID: " + data[2] + "    Supervisor Name: " + data[1] + "\n" + "Employee ID: " + data[4] + 
+                    "    Employee Name: " + data[3] + "\n" + "Evaluation Date: " + data[5]
+                    + "\n" + "Feelings while performing tasks: " + data[6] + "\n" +"If you could do one task all day: "  + data[7] + "\n" + 
+                    "Tasks you're good at: " + data[8] +  "\n" +"Tasks you dread: " + data[9]  + "\n" + "Tasks you look forward to: " +
+                    data[10] + "\n" + "Recommendations/Notes: " + data[11] + "\n" + "\n"); // Append each line of the file to the JTextArea
             }
         } catch (IOException e) {
             textArea.setText("Error reading file: " + e.getMessage()); // Display error message if file reading fails
