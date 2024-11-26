@@ -6,9 +6,10 @@ import java.util.regex.Pattern;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * The NewEvaluationFrame class extends BaseFrame and provides a form to create a new evaluation.
+ */
 public class NewEvaluationFrame extends BaseFrame {
-
-    // Declare JTextFields and JTextAreas as class members
     private JTextField supervisorNameField;
     private JTextField supervisorIDField;
     private JTextField employeeNameField;
@@ -21,32 +22,39 @@ public class NewEvaluationFrame extends BaseFrame {
     private JTextArea question5Field;
     private JTextArea recommendationsField;
 
+    /**
+     * Constructs a NewEvaluationFrame.
+     */
     public NewEvaluationFrame() {
         super();
         setTitle("Employee Evaluation Form");
     }
 
+    /**
+     * Creates the main panel to be added to the frame.
+     *
+     * @return a JPanel to be added to the frame
+     */
     @Override
     protected JPanel createMainPanel() {
         JPanel panel = new JPanel();
-        panel.setBackground(Color.decode("#424249")); // Setting the background color
-        panel.setLayout(new BorderLayout()); // Use BorderLayout for top, center, bottom arrangement
+        panel.setBackground(Color.decode("#424249"));
+        panel.setLayout(new BorderLayout());
 
-        // Panel for all input fields
+        // Panel for input fields
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(10, 10, 10, 10); // Add padding between components
+        gbc.insets = new Insets(10, 10, 10, 10);
 
-        // Initialize JTextFields and JTextAreas
         supervisorNameField = createTextField();
         supervisorIDField = createTextField();
         employeeNameField = createTextField();
         employeeIDField = createTextField();
         evaluationDateField = createTextField();
         evaluationDateField.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))); // Format the date
-        evaluationDateField.setEditable(false); // Make the field non-editable
+        evaluationDateField.setEditable(false);
 
         question1Field = createTextArea();
         question2Field = createTextArea();
@@ -55,14 +63,12 @@ public class NewEvaluationFrame extends BaseFrame {
         question5Field = createTextArea();
         recommendationsField = createTextArea();
 
-        // Add components to input panel
         addComponent(inputPanel, gbc, "Supervisor Name:", supervisorNameField, 0);
         addComponent(inputPanel, gbc, "Supervisor ID:", supervisorIDField, 1);
         addComponent(inputPanel, gbc, "Employee Name:", employeeNameField, 2);
         addComponent(inputPanel, gbc, "Employee ID:", employeeIDField, 3);
         addComponent(inputPanel, gbc, "Evaluation Date:", evaluationDateField, 4);
 
-        // Add questions with text areas
         addComponent(inputPanel, gbc, "Feelings while performing specific tasks, explain why:", new JScrollPane(question1Field), 5);
         addComponent(inputPanel, gbc, "If you could do one task all day, explain why:", new JScrollPane(question2Field), 6);
         addComponent(inputPanel, gbc, "Tasks you're good at:", new JScrollPane(question3Field), 7);
@@ -70,27 +76,25 @@ public class NewEvaluationFrame extends BaseFrame {
         addComponent(inputPanel, gbc, "Tasks you look forward to, explain why:", new JScrollPane(question5Field), 9);
         addComponent(inputPanel, gbc, "Recommendations/Notes:", new JScrollPane(recommendationsField), 10);
 
-        // Create a JScrollPane for the input panel
         JScrollPane scrollPane = new JScrollPane(inputPanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        panel.add(scrollPane, BorderLayout.CENTER); // Add scrollable area in the center
+        panel.add(scrollPane, BorderLayout.CENTER);
 
-        // Add Home button (not in the scrollable area)
+        // Home button
         JButton homeButton = new JButton("Home");
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose(); // Close the current frame
+                dispose();
             }
         });
-        panel.add(homeButton, BorderLayout.NORTH); // Add Home button at the top
+        panel.add(homeButton, BorderLayout.NORTH);
 
-        // Create and add the Save button at the bottom (not in the scrollable area)
+        // Save Button
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Retrieve values from input fields
                 String supervisorName = supervisorNameField.getText();
                 String supervisorID = supervisorIDField.getText();
                 String employeeName = employeeNameField.getText();
@@ -103,7 +107,7 @@ public class NewEvaluationFrame extends BaseFrame {
                 String lookedForwardTasks = question5Field.getText();
                 String recommendations = recommendationsField.getText();
 
-                // Validate fields with regular expressions (placeholders)
+                // Validate fields
                 if (!validateName(supervisorName) || !validateName(employeeName)) {
                     JOptionPane.showMessageDialog(panel, "Invalid name. Please enter valid names.");
                     return;
@@ -114,7 +118,7 @@ public class NewEvaluationFrame extends BaseFrame {
                     return;
                 }
 
-                // Create a new Evaluation object and save it
+                // Create a new Evaluation and save it
                 Evaluation newEvaluation = new Evaluation(supervisorName, supervisorID, employeeName, employeeID, evaluationDate, feelings, favoriteTask, goodAtTasks, dreadedTasks, lookedForwardTasks, recommendations);
                 newEvaluation.saveToFile();
                 clearFields();
@@ -122,43 +126,73 @@ public class NewEvaluationFrame extends BaseFrame {
                 dispose();
             }
         });
-        panel.add(saveButton, BorderLayout.SOUTH); // Add Save button at the bottom
+        panel.add(saveButton, BorderLayout.SOUTH);
 
         return panel;
     }
 
-    // Helper method to create JTextField with a minimum size
+    /**
+     * Creates a JTextField with a minimum size.
+     *
+     * @return a JTextField with a minimum size
+     */
     private JTextField createTextField() {
         JTextField textField = new JTextField();
         textField.setMinimumSize(new Dimension(300, 25));
         return textField;
     }
 
-    // Helper method to create JTextArea with a fixed size
+    /**
+     * Creates a JTextArea with a fixed size.
+     *
+     * @return a JTextArea with a fixed size
+     */
     private JTextArea createTextArea() {
         return new JTextArea(3, 20);
     }
 
-    // Helper method to add components to the panel
+    /**
+     * Adds a label and component to the panel.
+     *
+     * @param panel the panel to add components to
+     * @param gbc the GridBagConstraints for layout
+     * @param label the label text
+     * @param component the component to add
+     * @param gridY the grid y position
+     */
     private void addComponent(JPanel panel, GridBagConstraints gbc, String label, Component component, int gridY) {
         gbc.gridx = 0;
-        gbc.gridy = gridY; // First column
+        gbc.gridy = gridY;
         panel.add(new JLabel(label), gbc);
-        gbc.gridx = 1; // Second column
-        gbc.weightx = 1.0; // Allow the component to expand
+        gbc.gridx = 1;
+        gbc.weightx = 1.0;
         panel.add(component, gbc);
-        gbc.weightx = 0; // Reset weight for the next components
+        gbc.weightx = 0;
     }
 
-    // Placeholder for name validation
+    /**
+     * Validates the name.
+     *
+     * @param name the name to validate
+     * @return true if the name is valid, false otherwise
+     */
     private boolean validateName(String name) {
-        return Pattern.matches("[A-Za-z ]+", name); // Name should contain only alphabets
+        return Pattern.matches("[A-Za-z ]+", name);
     }
 
+    /**
+     * Validates the ID.
+     *
+     * @param id the ID to validate
+     * @return true if the ID is valid, false otherwise
+     */
     private boolean validateID(String id) {
-        return Pattern.matches("[0-9]+", id); // ID should contain only numbers
+        return Pattern.matches("[0-9]+", id);
     }
 
+    /**
+     * Clears all input fields.
+     */
     private void clearFields() {
         supervisorNameField.setText("");
         supervisorIDField.setText("");

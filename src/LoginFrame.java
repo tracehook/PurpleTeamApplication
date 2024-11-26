@@ -4,39 +4,44 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.regex.Pattern;
 
+/**
+ * The LoginFrame class extends BaseFrame and provides a form for user login.
+ */
 public class LoginFrame extends BaseFrame {
 
+    /**
+     * Creates the main panel to be added to the frame.
+     *
+     * @return a JPanel to be added to the frame
+     */
     @Override
     protected JPanel createMainPanel() {
         JPanel panel = new JPanel();
-        panel.setBackground(Color.decode("#424249")); // Setting the background color
-        panel.setLayout(new GridBagLayout()); // Use GridBagLayout for flexible component arrangement
+        panel.setBackground(Color.decode("#424249"));
+        panel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10); // Add padding between components
+        gbc.insets = new Insets(10, 10, 10, 10);
 
-        // Load the image
+        // Load logo
         ImageIcon imageIcon = new ImageIcon(getClass().getResource("/assets/purpleMonkey.png"));
         JLabel imageLabel = new JLabel(imageIcon);
-        
-        // Position the image before the header label
+
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.gridwidth = 2; // Span across two columns
-        gbc.anchor = GridBagConstraints.NORTH; // Center the image
-        panel.add(imageLabel, gbc); // Add image before the header label
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.NORTH;
+        panel.add(imageLabel, gbc);
 
-        // Header label
         JLabel headerLabel = new JLabel("Login");
-        headerLabel.setForeground(Color.WHITE); // Set font color to white
-        headerLabel.setFont(new Font("Arial", Font.BOLD, 24)); // Set font style and size
+        headerLabel.setForeground(Color.WHITE);
+        headerLabel.setFont(new Font("Arial", Font.BOLD, 24));
         gbc.gridx = 0;
-        gbc.gridy = 1; // Move the header to the next row (1 in this case)
-        gbc.gridwidth = 2; // Span across two columns
-        gbc.anchor = GridBagConstraints.CENTER; // Center the label
-        gbc.weightx = 1.0; // Allow the label to expand
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.weightx = 1.0;
         panel.add(headerLabel, gbc);
 
-        // Create username and password labels and fields
         JLabel usernameLabel = new JLabel("Username:");
         JTextField usernameField = new JTextField(20);
 
@@ -45,7 +50,7 @@ public class LoginFrame extends BaseFrame {
 
         JButton submitButton = new JButton("Submit");
 
-        // Add components to the panel with positioning
+        // add components to the panel
         gbc.gridx = 0;
         gbc.gridy = 2;
         panel.add(usernameLabel, gbc);
@@ -64,23 +69,22 @@ public class LoginFrame extends BaseFrame {
         gbc.gridy = 4;
         panel.add(submitButton, gbc);
 
-        // Add action listener to the submit button
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String username = usernameField.getText();
                 String password = new String(passwordField.getPassword());
 
-                // Validate username and password
+                // check if username and password are empty/valid
                 if (username.isEmpty()) {
                     JOptionPane.showMessageDialog(panel, "Username cannot be empty.");
-                    usernameField.requestFocus(); // Set focus back to username field
+                    usernameField.requestFocus();
                     return;
                 }
 
                 if (password.isEmpty()) {
                     JOptionPane.showMessageDialog(panel, "Password cannot be empty.");
-                    passwordField.requestFocus(); // Set focus back to password field
+                    passwordField.requestFocus();
                     return;
                 }
 
@@ -97,27 +101,35 @@ public class LoginFrame extends BaseFrame {
                 ActiveUser activeUser = new ActiveUser(username, password);
                 if (activeUser.verifyUser()) {
                     JOptionPane.showMessageDialog(panel, "Login successful.");
-                    dispose(); // Close the login frame
-                    new HomeFrame(activeUser); // Open the home frame
+                    dispose();
+                    new HomeFrame(activeUser);
                 } else {
                     JOptionPane.showMessageDialog(panel, "Invalid username or password. Please try again.");
                 }
             }
         });
 
-        // Set focus to username field when the frame is shown
         usernameField.requestFocus();
 
         return panel;
     }
 
-
-    // Method to validate username
+    /**
+     * Validates the username.
+     *
+     * @param username the username to validate
+     * @return true if the username is valid, false otherwise
+     */
     private boolean validateUsername(String username) {
-        return Pattern.matches("[A-Za-z0-9]+", username); // Username should contain only alphabets and numbers
+        return Pattern.matches("[A-Za-z0-9]+", username);
     }
 
-    // Method to validate password
+    /**
+     * Validates the password.
+     *
+     * @param password the password to validate
+     * @return true if the password is valid, false otherwise
+     */
     private boolean validatePassword(String password) {
         String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*(),.?\":{}|<>])[A-Za-z\\d!@#$%^&*(),.?\":{}|<>]{8,}$";
         return Pattern.matches(passwordRegex, password);

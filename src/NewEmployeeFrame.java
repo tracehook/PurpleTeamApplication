@@ -7,9 +7,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
+/**
+ * The NewEmployeeFrame class extends BaseFrame and provides a form to create a new employee.
+ */
 public class NewEmployeeFrame extends BaseFrame {
-
-    // Declare JTextField variables as class members
     private JTextField firstNameField;
     private JTextField lastNameField;
     private JTextField emailField;
@@ -24,25 +25,32 @@ public class NewEmployeeFrame extends BaseFrame {
     private JTextField virtuesField;
     private JTextField pastJobsField;
 
+    /**
+     * Constructs a NewEmployeeFrame.
+     */
     public NewEmployeeFrame() {
         super();
         setTitle("New Employee Form");
     }
 
+    /**
+     * Creates the main panel to be added to the frame.
+     *
+     * @return a JPanel to be added to the frame
+     */
     @Override
     protected JPanel createMainPanel() {
         JPanel panel = new JPanel();
-        panel.setBackground(Color.decode("#424249")); // Setting the background color
+        panel.setBackground(Color.decode("#424249"));
         panel.setLayout(new BorderLayout());
 
-        // Panel for all input fields
+        // Panel for input fields
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(10, 10, 10, 10); // Add padding between components
+        gbc.insets = new Insets(10, 10, 10, 10);
 
-        // Initialize JTextFields and set minimum sizes
         firstNameField = createTextField();
         lastNameField = createTextField();
         emailField = createTextField();
@@ -57,16 +65,16 @@ public class NewEmployeeFrame extends BaseFrame {
         virtuesField = createTextField();
         pastJobsField = createTextField();
 
-        // Add Back button (not in the scrollable area)
+        // Add Back button
         JButton homeButton = new JButton("Home");
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose(); // Close the current frame
+                dispose();
             }
         });
 
-        panel.add(homeButton, BorderLayout.NORTH); // Add Back button at the top
+        panel.add(homeButton, BorderLayout.NORTH);
 
         // Add components to input panel
         addComponent(inputPanel, gbc, "First Name:", firstNameField, 0);
@@ -83,17 +91,15 @@ public class NewEmployeeFrame extends BaseFrame {
         addComponent(inputPanel, gbc, "Virtues: (Separate with \",\")", virtuesField, 11);
         addComponent(inputPanel, gbc, "Past Job Titles: (Separate with \",\")", pastJobsField, 12);
 
-        // Create a JScrollPane for the input panel
         JScrollPane scrollPane = new JScrollPane(inputPanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        panel.add(scrollPane, BorderLayout.CENTER); // Add scrollable area in the center
+        panel.add(scrollPane, BorderLayout.CENTER);
 
-        // Create and add the Save button at the bottom (not in the scrollable area)
+        // Save Button
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Retrieve values from input fields
                 String firstName = firstNameField.getText();
                 String lastName = lastNameField.getText();
                 String email = emailField.getText();
@@ -108,17 +114,17 @@ public class NewEmployeeFrame extends BaseFrame {
                 String virtues = virtuesField.getText();
                 String pastJobs = pastJobsField.getText();
 
+                // Validate input fields
                 if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || username.isEmpty() || password.isEmpty() || accessLevel.isEmpty() || dateHired.isEmpty() || currentJob.isEmpty() || softSkills.isEmpty() || hardSkills.isEmpty() || talents.isEmpty() || virtues.isEmpty() || pastJobs.isEmpty()) {
                     JOptionPane.showMessageDialog(panel, "Please fill out all fields.");
                     return;
                 }
-                
+
                 if (checkDuplicate(username)) {
                     JOptionPane.showMessageDialog(panel, "Username already exists. Please choose a different username.");
                     return;
                 }
 
-                // Validate fields with regular expressions (placeholders)
                 if (!validateName(firstName) || !validateName(lastName)) {
                     JOptionPane.showMessageDialog(panel, "Invalid name. Please enter valid names.");
                     return;
@@ -139,59 +145,94 @@ public class NewEmployeeFrame extends BaseFrame {
                     return;
                 }
 
-                // If all validations pass, create new Employee object
-                Employee newEmployee = new Employee(firstName, lastName, email, username, password, accessLevel,
-                                    dateHired, currentJob, softSkills, hardSkills, talents, virtues, pastJobs);
+                // If validations pass, create new Employee
+                Employee newEmployee = new Employee(firstName, lastName, email, username, password, accessLevel, dateHired, currentJob, softSkills, hardSkills, talents, virtues, pastJobs);
+                System.out.println("employee data" + newEmployee);
                 newEmployee.saveToFile();
                 clearFields();
                 JOptionPane.showMessageDialog(panel, "Employee created and saved successfully, they can now login using the username and password provided.");
                 dispose();
             }
         });
-        panel.add(saveButton, BorderLayout.SOUTH); // Add Save button at the bottom
+        panel.add(saveButton, BorderLayout.SOUTH);
 
         return panel;
     }
 
-    // Helper method to create JTextField with minimum size
+    /**
+     * Creates a JTextField with a minimum size.
+     *
+     * @return a JTextField with a minimum size
+     */
     private JTextField createTextField() {
         JTextField textField = new JTextField();
         textField.setMinimumSize(new Dimension(200, 30));
         return textField;
     }
 
-    // Helper method to add components to the panel
+    /**
+     * Adds a label and text field to the panel.
+     *
+     * @param panel the panel to add components to
+     * @param gbc the GridBagConstraints for layout
+     * @param label the label text
+     * @param textField the text field
+     * @param gridY the grid y position
+     */
     private void addComponent(JPanel panel, GridBagConstraints gbc, String label, JTextField textField, int gridY) {
-        gbc.gridx = 0; gbc.gridy = gridY; // First column
+        gbc.gridx = 0; gbc.gridy = gridY;
         panel.add(new JLabel(label), gbc);
-        gbc.gridx = 1; // Second column
-        gbc.weightx = 1.0; // Allow the text field to expand
+        gbc.gridx = 1;
+        gbc.weightx = 1.0;
         panel.add(textField, gbc);
-        gbc.weightx = 0; // Reset weight for the next components
+        gbc.weightx = 0;
     }
 
-    // Placeholder for name validation
+    /**
+     * Validates the name.
+     *
+     * @param name the name to validate
+     * @return true if the name is valid, false otherwise
+     */
     private boolean validateName(String name) {
-        return Pattern.matches("[A-Za-z]+", name); // Name should contain only alphabets
+        return Pattern.matches("[A-Za-z]+", name);
     }
 
-    // Placeholder for email validation
+    /**
+     * Validates the email.
+     *
+     * @param email the email to validate
+     * @return true if the email is valid, false otherwise
+     */
     private boolean validateEmail(String email) {
         String emailRegex = "^[\\w-\\.]+@[\\w-]+\\.[a-z]{2,4}$";
         return Pattern.matches(emailRegex, email);
     }
 
-    // Placeholder for password validation
+    /**
+     * Validates the password.
+     *
+     * @param password the password to validate
+     * @return true if the password is valid, false otherwise
+     */
     private boolean validatePassword(String password) {
         String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*(),.?\":{}|<>])[A-Za-z\\d!@#$%^&*(),.?\":{}|<>]{8,}$";
         return Pattern.matches(passwordRegex, password);
-    }    
+    }
 
-    // Placeholder for access level validation (0 = Employee, 1 = Manager)
+    /**
+     * Validates the access level.
+     *
+     * @param accessLevel the access level to validate
+     * @return true if the access level is valid, false otherwise
+     */
     private boolean validateAccessLevel(String accessLevel) {
         return accessLevel.equals("0") || accessLevel.equals("1");
     }
 
+    /**
+     * Clears all fields.
+     */
     private void clearFields() {
         firstNameField.setText("");
         lastNameField.setText("");
@@ -208,14 +249,18 @@ public class NewEmployeeFrame extends BaseFrame {
         pastJobsField.setText("");
     }
 
+    /**
+     * Checks for duplicate username in the file.
+     *
+     * @param username the username to check
+     * @return true if the username exists, false otherwise
+     */
     private boolean checkDuplicate(String username) {
         try (BufferedReader reader = new BufferedReader(new FileReader("Employees.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(";");
-                // Check if there are enough elements in the array
                 if (data.length > 4) {
-                    // Trim whitespace from both the username and the data
                     if (data[4].trim().equalsIgnoreCase(username.trim())) {
                         return true;
                     }
@@ -224,6 +269,6 @@ public class NewEmployeeFrame extends BaseFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return false; // Return false if no match found
+        return false;
     }
 }
