@@ -3,3 +3,5 @@
 3; Koen; Tanner; ktanner1@gmail.com; ktanner1; Ktanner1!; 1; 08/23/2024; FedEx; Teamwork; Databases; Proficiency; Honesty; Detailing
 4; Bob; Long; blong@gmail.com; blong1; Boblong1!; 0; 08/23/2024; AT&T; Time management; Debugging; Punctual; Kindness; Chick-fil-A
 5; Jason; Owen; jowen@murraystate.edu; jowen; Jasonowen1!; 1; 09/12/2021; Professor; Coding; Fighting; Music choice; Cool hats; Military
+6; John; Doe; jdoe1@gmail.com; jdoe1; Johndoe1!; 0; 11/24/2024; Samsung; Social; Writing; Accuracy; Transparency; N/A
+7; Dave; Hudson; dhudson1@gmail.com; dhudson1; Dhudson1!; 0; 11/24/2024; Apple; Determined; Multilingual; Creativity; Wisdom; Microsoft
